@@ -4,52 +4,71 @@ import Order from "./class/Order.js";
 import Customer from "./class/Customer.js";
 
 import productListView from "./view/productList.js";
-import cartView from "./view/productDetails.js";
+import cartView from "./view/cart.js";
 import favoritesView from "./view/favorites.js";
 import productDetailsView from "./view/productDetails.js";
 
 const rootPath = "/prog-alused-e-pood";
-
-const productList = [
-    new Product("1", "Apple", 0.59, "Fruit"),
-    new Product("2", "Lollipop", 0.49, "Candy"),
-    new Product("3", "Ostrich Egg", 4.99, "Egg"),
-    new Product("4", "1TB SSD", 89.99, "Computer Part")
-]
+const productList = []
+const categoryList = []
 
 window.addEventListener('popstate', handleRouteChange);
 
 // Update handleRouteChange to render views
 function handleRouteChange() {
     const path = window.location.pathname;
-    console.log(path);
     let view;
-
+    
     switch (path) {
         case rootPath + '/cart':
             view = cartView();
-            break;
-
+        break;
+        
         case rootPath + '/favorites':
             view = favoritesView();
-            break;
-
+        break;
+        
         default:
             if (path.match(rootPath + '/product/[0-9]+')) {
                 const productId = path.split('/').pop();
                 view = productDetailsView(productId);
             } else {
-                view = productListView(productList, rootPath);
+                view = productListView(productList, categoryList, rootPath);
             }
     }
-
+        
     document.getElementById('view-container').innerHTML = view;
 }
-
-window.clickRouter = function(e) {
-    e.preventDefault();
-    history.pushState(null, '', this.href);
+        
+window.clickRouter = function(event) {
+    event.preventDefault();
+    history.pushState(null, '', event.target.href);
     handleRouteChange();
 }
-
+        
 document.querySelectorAll('.route').forEach(link => {link.addEventListener('click', window.clickRouter)});
+
+fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(json=> {
+                json.forEach(item => {
+                    productList.push(
+                        new Product(
+                            item.id,
+                            item.title,
+                            item.price,
+                            item.category,
+                            item.description,
+                            item.image
+                        )
+                    )
+
+                    if (!categoryList.includes(item.category)) {
+                        categoryList.push(item.category);
+                    }
+                })
+                categoryList.sort((a, b) => a.localeCompare(b));
+                console.log(productList);
+                console.log(categoryList);
+                handleRouteChange()
+            })

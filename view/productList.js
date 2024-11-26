@@ -1,4 +1,4 @@
-export default function productListView(productList, rootPath) {
+export default function productListView(productList, categoryList, rootPath) {
     let contentHTML = '<div id="product-list">';
 
     productList.forEach(product => {
