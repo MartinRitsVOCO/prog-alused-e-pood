@@ -1,4 +1,4 @@
-export default function productDetailsView(productId, productList, rootPath) {
+export default function productDetailsView(productId, productList, cart, rootPath) {
     const product = productList.find(product => product.id == productId);
     const category = product.category.charAt(0).toUpperCase() + product.category.slice(1);
     return `<article class="product-details">

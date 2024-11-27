@@ -5,16 +5,16 @@ export default class Cart {
 
     addProduct(product, quantity = 1) {
         if (this.products.some(entry => entry.id === product.id)) {
-            this.updateProductQuantity(this.products.findIndex(entry => entry.id === product.id), quantity);
+            this.updateProductQuantity( product.id, quantity);
             return;
         }
         product.quantity = quantity;
         this.products.push(product);
     }
     updateProductQuantity(id, delta) {
-        const product = this.products[this.products.findIndex(entry => entry.id === id)];
-        product.quantity += delta;
-        if (product.quantity <= 0) {
+        const productIndex = this.products.findIndex(entry => entry.id === id);
+        this.products[productIndex].quantity += delta;
+        if (this.products[productIndex].quantity <= 0) {
             this.removeProduct(id);
         }
     }

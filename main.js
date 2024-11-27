@@ -15,6 +15,7 @@ const rootPath = "/prog-alused-e-pood";
 const productList = []
 const categoryList = []
 const cart = new Cart();
+let currentView = "";
 
 // Update handleRouteChange to render views
 function handleRouteChange() {
@@ -23,19 +24,23 @@ function handleRouteChange() {
     
     switch (path) {
         case rootPath + '/cart':
-            view = cartView();
+            view = cartView(cart, rootPath);
+            currentView = "cart";
         break;
         
         case rootPath + '/favorites':
-            view = favoritesView();
+            view = favoritesView(productList, cart, rootPath);
+            currentView = "favorites";
         break;
         
         default:
             if (path.match(rootPath + '/product/[0-9]+')) {
                 const productId = path.split('/').pop();
-                view = productDetailsView(productId, productList, rootPath);
+                view = productDetailsView(productId, productList, cart, rootPath);
+                currentView = "productDetails";
             } else {
-                view = productListView(productList, categoryList, rootPath);
+                view = productListView(productList, categoryList, cart, rootPath);
+                currentView = "productList";
             }
     }
         
@@ -57,12 +62,15 @@ window.clickFavorite = function(event) {
     const product = productList.find(product => product.id == productId);
     if (product.favorite) {
         product.favorite = false;
-        target.classRemove('favorite-true');
-        target.classAdd('favorite-false');
+        target.classList.remove('favorite-button--true');
+        target.classList.add('favorite-button--false');
+        if (currentView === "favorites") {
+            target.parentElement.parentElement.remove();
+        }
     } else {
         product.favorite = true;
-        target.classRemove("favorite-false");
-        target.classAdd("favorite-true");
+        target.classList.remove("favorite-button--false");
+        target.classList.add("favorite-button--true");
     }
 }
 
@@ -73,6 +81,10 @@ window.clickAddToCart = function(event) {
     const productId = target.dataset.productId;
     const product = productList.find(product => product.id == productId);
     cart.addProduct(product);
+    if (!target.classList.contains("add-to-cart--true")) {
+        target.classList.remove("add-to-cart--false");
+        target.classList.add("add-to-cart--true");
+    }
 }
 
 // add event listeners
@@ -100,7 +112,5 @@ fetch('https://fakestoreapi.com/products')
                     }
                 })
                 categoryList.sort((a, b) => a.localeCompare(b));
-                console.log(productList);
-                console.log(categoryList);
                 handleRouteChange()
             })

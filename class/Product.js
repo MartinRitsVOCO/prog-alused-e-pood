@@ -6,7 +6,7 @@ export default class Product {
         this.category =  category;
         this.description = description;
         this.image = image;
-        this.quantity;
+        this.quantity = 0;
         this.favorite = false;
     }
 
