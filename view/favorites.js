@@ -11,8 +11,8 @@ export default function favoritesView(productList, cart, rootPath) {
                 </a>
                 <div class="product-entry-price">${product.price}€</div>
                 <div class="product-entry-buttons">
-                    <button class="add-to-cart add-to-cart--${cart.products.some(entry => entry.id === product.id) ? 'true' : 'false'}" data-product-id="${product.id}" onclick="clickAddToCart(event)">
-                    <button class="favorite-button favorite-button--${product.favorite ? 'true' : 'false'}" data-product-id="${product.id}" onclick="clickFavorite(event)">
+                    <button class="add-to-cart add-to-cart--${cart.products.some(entry => entry.id === product.id) ? 'true' : 'false'}" data-product-id="${product.id}">
+                    <button class="favorite-button favorite-button--${product.favorite ? 'true' : 'false'}" data-product-id="${product.id}">
                 </div>
             </section>`;
         }

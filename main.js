@@ -4,62 +4,45 @@ import Cart from "./class/Cart.js";
 import Order from "./class/Order.js";
 import Customer from "./class/Customer.js";
 
-// Import views
-import productListView from "./view/productList.js";
-import cartView from "./view/cart.js";
-import favoritesView from "./view/favorites.js";
-import productDetailsView from "./view/productDetails.js";
+// Import router
+import { handleRouteChange, clickRouter, initRouter, rootPath, currentView } from "./route.js";
 
 // Initialize variables
-const rootPath = "/prog-alused-e-pood";
 const productList = []
 const categoryList = []
 const cart = new Cart();
-let currentView = "";
 
-// Update handleRouteChange to render views
-function handleRouteChange() {
-    const path = window.location.pathname;
-    let view;
-    
-    switch (path) {
-        case rootPath + '/cart':
-            view = cartView(cart, rootPath);
-            currentView = "cart";
-        break;
-        
-        case rootPath + '/favorites':
-            view = favoritesView(productList, cart, rootPath);
-            currentView = "favorites";
-        break;
-        
-        default:
-            if (path.match(rootPath + '/product/[0-9]+')) {
-                const productId = path.split('/').pop();
-                view = productDetailsView(productId, productList, cart, rootPath);
-                currentView = "productDetails";
-            } else {
-                view = productListView(productList, categoryList, cart, rootPath);
-                currentView = "productList";
-            }
+// Event delegation for click events
+document.addEventListener("click", (event) => {
+    if (event.target.matches('.router-link') || currentView != "") {
+        clickRouter(event);
     }
-        
-    document.getElementById('view-container').innerHTML = view;
-}
+    if (event.target.matches('.favorite-button')) {
+        clickFavorite(event);
+    }
+    if (event.target.matches('.add-to-cart')) {
+        clickAddToCart(event);
+    }
+})
 
-// Global function for nav route elements
-window.clickRouter = function(event) {
+// Function for favorite toggle elements
+function clickFavorite(event) {
     event.preventDefault();
-    history.pushState(null, '', event.target.href);
-    handleRouteChange();
-}
-
-// Global function for favorite toggle elements
-window.clickFavorite = function(event) {
-    event.preventDefault();
+    event.stopPropagation();
     const target = event.target;
+    console.log(target);
+    
+    // Capture the exact state by creating a snapshot
+    const initialState = {
+        classList: Array.from(target.classList),
+        favorite: target.classList.contains('favorite-button--true'),
+        timestamp: Date.now()
+    };
+    console.log('Initial state snapshot:', initialState);
+
     const productId = target.dataset.productId;
     const product = productList.find(product => product.id == productId);
+
     if (product.favorite) {
         product.favorite = false;
         target.classList.remove('favorite-button--true');
@@ -74,8 +57,8 @@ window.clickFavorite = function(event) {
     }
 }
 
-// Global function for add to cart elements
-window.clickAddToCart = function(event) {
+// Function for add to cart elements
+function clickAddToCart(event) {
     event.preventDefault();
     const target = event.target;
     const productId = target.dataset.productId;
@@ -86,10 +69,6 @@ window.clickAddToCart = function(event) {
         target.classList.add("add-to-cart--true");
     }
 }
-
-// add event listeners
-window.addEventListener('popstate', handleRouteChange);       
-document.querySelectorAll('.route').forEach(link => {link.addEventListener('click', window.clickRouter)});
 
 // API call for product information
 fetch('https://fakestoreapi.com/products')
@@ -112,5 +91,6 @@ fetch('https://fakestoreapi.com/products')
                     }
                 })
                 categoryList.sort((a, b) => a.localeCompare(b));
-                handleRouteChange()
+                initRouter(productList, categoryList, cart);
+                handleRouteChange();
             })
