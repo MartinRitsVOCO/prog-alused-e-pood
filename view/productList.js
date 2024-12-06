@@ -1,22 +1,17 @@
-export default function productListView(productList, categoryList, cart, rootPath) {
-    let contentHTML = '<div id="product-list">';
+import ProductEntry from "../components/ProductEntry.js";
 
-    productList.forEach(product => {
-        contentHTML += 
-        `<section class="product-entry">
-            <a onclick="clickRouter(event)" href="${rootPath}/product/${product.id}">
-                <h3>${product.name}</h3>
-                <img src="${product.image}">
-            </a>
-            <div class="product-entry-price">${product.price}€</div>
-            <div class="product-entry-buttons">
-                <button class="add-to-cart add-to-cart--${cart.products.some(entry => entry.id === product.id) ? 'true' : 'false'}" data-product-id="${product.id}">
-                <button class="favorite-button favorite-button--${product.favorite ? 'true' : 'false'}" data-product-id="${product.id}">
-            </div>
-        </section>`;
-    })
+export default function productListView(productList, categoryList, cart, customer, rootPath) {
+    const productListElement = document.createElement("div");
+    productListElement.id = "product-list";
 
-    contentHTML += "</div>";
+    if (productList.length <= 0) {
+        productListElement.textContent = "No Products Available"
+    } else {
+        productList.forEach(product => {
+            const productEntry = new ProductEntry(rootPath, product, cart, customer);
+            productListElement.appendChild(productEntry.render());
+        })
+    }
 
-    return contentHTML
+    return productListElement;
 }

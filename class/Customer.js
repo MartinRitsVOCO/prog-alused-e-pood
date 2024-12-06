@@ -4,6 +4,7 @@ export default class Customer {
     constructor(name) {
         this.name = name;
         this.orderHistory = [];
+        this.favorites = [];
     }
 
     placeOrder(cart) {

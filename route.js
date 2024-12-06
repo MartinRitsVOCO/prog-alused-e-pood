@@ -10,6 +10,7 @@ let currentView = "";
 let productList = [];
 let categoryList = [];
 let cart;
+let customer;
 
 // Update handleRouteChange to render views
 function handleRouteChange() {
@@ -18,12 +19,12 @@ function handleRouteChange() {
     
     switch (path) {
         case rootPath + '/cart':
-            view = cartView(cart, rootPath);
+            view = cartView(cart, customer, rootPath);
             currentView = "cart";
         break;
         
         case rootPath + '/favorites':
-            view = favoritesView(productList, cart, rootPath);
+            view = favoritesView(productList, cart, customer, rootPath);
             currentView = "favorites";
         break;
         
@@ -33,12 +34,13 @@ function handleRouteChange() {
                 view = productDetailsView(productId, productList, cart, rootPath);
                 currentView = "productDetails";
             } else {
-                view = productListView(productList, categoryList, cart, rootPath);
+                view = productListView(productList, categoryList, cart, customer, rootPath);
                 currentView = "productList";
             }
     }
-        
-    document.getElementById('view-container').innerHTML = view;
+    
+    document.getElementById('view-container').innerHTML = "";
+    document.getElementById('view-container').appendChild(view);
 }
 
 // Function for nav route elements
@@ -49,10 +51,11 @@ function clickRouter(event) {
 }
 
 // Initialize router
-function initRouter(pList, cList, cObject) {
+function initRouter(pList, cList, cartObject, customerObject) {
     productList = pList;
     categoryList = cList;
-    cart = cObject;
+    cart = cartObject;
+    customer = customerObject;
 
     window.addEventListener('popstate', handleRouteChange);
 }
