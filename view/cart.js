@@ -1,4 +1,4 @@
-import ProductEntry from "../components/ProductEntry.js";
+import CartEntry from "../components/CartEntry.js";
 
 export default function cartView(cart, customer, rootPath) {
     const productList = cart.products;
@@ -9,8 +9,8 @@ export default function cartView(cart, customer, rootPath) {
         productListElement.textContent = "No Products Available"
     } else {
         productList.forEach(product => {
-            const productEntry = new ProductEntry(rootPath, product, cart, customer);
-            productListElement.appendChild(productEntry.render());
+            const cartEntry = new CartEntry(rootPath, product, cart, customer);
+            productListElement.appendChild(cartEntry.render());
         })
     }
 

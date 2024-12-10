@@ -8,11 +8,11 @@ export default class ProductEntry {
         this.product = product;
         this.cart = cart;
         this.customer = customer;
+        this.productEntry = document.createElement("section");
     }
 
     render() {
-        const productEntry = document.createElement("section");
-        productEntry.classList.add("product-entry");
+        this.productEntry.classList.add("product-entry");
 
         const productHeader = document.createElement("a");
         productHeader.href = `${this.rootPath}/product/${this.product.id}`;
@@ -23,13 +23,13 @@ export default class ProductEntry {
         productHeader.appendChild(document.createElement("img"));
         productHeader.lastChild.src = this.product.image;
 
-        productEntry.appendChild(productHeader);
+        this.productEntry.appendChild(productHeader);
 
         const productPrice = document.createElement("div");
         productPrice.textContent = this.product.price + "€";
         productPrice.classList.add("product-entry-price");
 
-        productEntry.appendChild(productPrice);
+        this.productEntry.appendChild(productPrice);
 
         const productButtons = document.createElement("div");
         productButtons.classList.add("product-entry-buttons");
@@ -40,8 +40,8 @@ export default class ProductEntry {
         productButtons.appendChild(addToCart.render());
         productButtons.appendChild(favoriteButton.render());
 
-        productEntry.appendChild(productButtons);
+        this.productEntry.appendChild(productButtons);
 
-        return productEntry;
+        return this.productEntry;
     }
 }
