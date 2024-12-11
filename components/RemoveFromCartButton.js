@@ -1,8 +1,8 @@
 export default class RemoveFromCartButton {
-    constructor(product, cart, removeEntry, cartEntry) {
+    constructor(product, cart, callback, callbackScope) {
         this.product = product;
         this.cart = cart;
-        this.removeEntry = removeEntry.bind(cartEntry);
+        this.callback = callback.bind(callbackScope);
         this.button = document.createElement("button");
     }
 
@@ -16,6 +16,6 @@ export default class RemoveFromCartButton {
 
     onClick() {
         this.cart.removeProduct(this.product.id);
-        this.removeEntry();
+        this.callback();
     }
 }
