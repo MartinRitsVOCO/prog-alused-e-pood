@@ -3,16 +3,16 @@
   box-sizing: border-box;
 }
 
-.main-nav-container {
+.main-nav--container {
   width: 100%;
   border-bottom: 3px solid black;
   padding-bottom: 10px;
 }
-.main-nav-container > h1 {
+.main-nav--container > h1 {
   text-align: center;
   font-size: 50px;
 }
-.main-nav-container > nav {
+.main-nav--container > nav {
   width: -moz-fit-content;
   width: fit-content;
   margin: 0 auto;
@@ -127,16 +127,29 @@
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
 }
-.cart-entry .cart-amount-field {
+.cart-entry .cart-entry-fields {
+  display: grid;
   grid-column: span 2;
-  width: 75px;
+  grid-template-columns: 1fr 1fr;
+}
+.cart-entry .cart-entry-fields .cart-entry-fields-sum {
   font-size: 15px;
-  margin: 5px 5px 5px auto;
+  text-align: center;
+  margin: 5px 5px;
+  padding: 3px 5px;
+  border: 1px solid black;
+  border-radius: 0 5px 5px 5px;
+  background-color: white;
+}
+.cart-entry .cart-entry-fields .cart-entry-fields-amounts {
+  width: 50px;
+  font-size: 15px;
+  margin: 5px 5px;
   padding: 3px 0 3px 10px;
   border: 1px solid black;
   border-radius: 0 5px 5px 5px;
 }
-.cart-entry .cart-amount-field::-webkit-inner-spin-button {
+.cart-entry .cart-entry-fields .cart-entry-fields-amounts::-webkit-inner-spin-button {
   cursor: pointer;
   margin: -3px 0;
 }/*# sourceMappingURL=styles.css.map */

@@ -2,7 +2,7 @@
     margin: 0
     box-sizing: border-box
 
-.main-nav-container
+.main-nav--container
     width: 100%
     border-bottom: 3px solid black
     padding-bottom: 10px
@@ -127,17 +127,30 @@
     .product-entry-buttons
         display: grid
         grid-template-columns: auto auto
-        grid-template-rows: auto auto 
+        grid-template-rows: auto auto
 
-    .cart-amount-field
+    .cart-entry-fields
+        display: grid
         grid-column: span 2
-        width: 75px
-        font-size: 15px
-        margin: 5px 5px 5px auto
-        padding: 3px 0 3px 10px
-        border: 1px solid black
-        border-radius: 0 5px 5px 5px
+        grid-template-columns: 1fr 1fr
 
-    .cart-amount-field::-webkit-inner-spin-button
-        cursor: pointer
-        margin: -3px 0
+        .cart-entry-fields-sum
+            font-size: 15px
+            text-align: center
+            margin: 5px 5px
+            padding: 3px 5px
+            border: 1px solid black
+            border-radius: 0 5px 5px 5px
+            background-color: white
+
+        .cart-entry-fields-amounts
+            width: 50px
+            font-size: 15px
+            margin: 5px 5px
+            padding: 3px 0 3px 10px
+            border: 1px solid black
+            border-radius: 0 5px 5px 5px
+
+            &::-webkit-inner-spin-button
+                cursor: pointer
+                margin: -3px 0

@@ -1,3 +1,5 @@
+import { updateNavbarCartCount } from "../router.js";
+
 export default class AddToCartButton {
     constructor(product, cart) {
         this.product = product;
@@ -32,5 +34,6 @@ export default class AddToCartButton {
         this.cart.addProduct(this.product);
         const cartProduct = this.cart.products.find(entry => entry.id === this.product.id);
         this.button.textContent = `${cartProduct.quantity}`;
+        updateNavbarCartCount(this.cart);
     }
 }

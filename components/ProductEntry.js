@@ -1,4 +1,4 @@
-import { clickRouter } from "../route.js";
+import { clickRouter } from "../router.js";
 import AddToCartButton from "./AddToCartButton.js";
 import FavoriteButton from "./FavoriteButton.js";
 

@@ -4,7 +4,7 @@ import Cart from "./class/Cart.js";
 import Customer from "./class/Customer.js";
 
 // Import router
-import { handleRouteChange, clickRouter, initRouter, rootPath, currentView } from "./route.js";
+import { handleRouteChange, clickRouter, initRouter } from "./router.js";
 
 // Initialize variables
 const productList = []

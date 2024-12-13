@@ -1,6 +1,6 @@
 import ProductEntry from "./ProductEntry.js";
 import RemoveFromCartButton from "./RemoveFromCartButton.js";
-import CartAmountField from "./cartAmountField.js";
+import CartFields from "./CartFields.js";
 
 export default class CartEntry extends ProductEntry {
     constructor(...args) {
@@ -18,8 +18,8 @@ export default class CartEntry extends ProductEntry {
         const removeButton = new RemoveFromCartButton(this.product, this.cart, this.removeEntry, this);
         entryButtons.appendChild(removeButton.render());
 
-        const cartAmountField = new CartAmountField(this.product, this.cart);
-        entryButtons.appendChild(cartAmountField.render());
+        const cartFields = new CartFields(this.product, this.cart);
+        entryButtons.appendChild(cartFields.render());
 
         return this.cartEntry;
     }

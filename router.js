@@ -57,7 +57,13 @@ function initRouter(pList, cList, cartObject, customerObject) {
     cart = cartObject;
     customer = customerObject;
 
+    updateNavbarCartCount(cart);
     window.addEventListener('popstate', handleRouteChange);
 }
 
-export { handleRouteChange, clickRouter, initRouter, rootPath, currentView };
+function updateNavbarCartCount (cart) {
+    const navbarCartCount = document.querySelector("#main-nav--cart-amount");
+    navbarCartCount.textContent = cart.totalItems;
+}
+
+export { handleRouteChange, clickRouter, initRouter, rootPath, currentView, updateNavbarCartCount };
