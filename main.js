@@ -15,6 +15,12 @@ const customer = new Customer("John Doe");
 // Add router events
 document.querySelectorAll('.route').forEach(link => {link.addEventListener('click', clickRouter)});
 
+function closeModal() {
+    document.querySelector("#modal").classList.add("--hidden");
+}
+
+document.querySelector("#modal--close-button").addEventListener("click", closeModal);
+
 // API call for product information
 fetch('https://fakestoreapi.com/products')
             .then(res=>res.json())

@@ -1,7 +1,9 @@
 export default class CartFields {
-    constructor(product, cart) {
+    constructor(product, cart, callback, callbackScope) {
         this.product = product;
         this.cart = cart;
+        this.callback = callback.bind(callbackScope);
+        this.button = document.createElement("button");
         this.container = document.createElement("div");
         this.sumField = document.createElement("div");
         this.amountField = document.createElement("input");
@@ -12,7 +14,10 @@ export default class CartFields {
         this.container.classList.add("cart-entry-fields");
 
         this.sumField.classList.add("cart-entry-fields-sum");
-        this.sumField.textContent = this.cartProduct.quantity * this.cartProduct.price + "€";
+        
+        let sum = this.cartProduct.quantity * this.cartProduct.price;
+        sum = (Math.round(sum * 100)/100).toFixed(2);
+        this.sumField.textContent = sum + "€";
 
         this.container.appendChild(this.sumField);
 
@@ -37,6 +42,10 @@ export default class CartFields {
         }
         
         this.cartProduct.quantity = this.amountField.value;
-        this.sumField.textContent = this.cartProduct.quantity * this.cartProduct.price + "€";
+
+        let sum = this.cartProduct.quantity * this.cartProduct.price;
+        sum = (Math.round(sum * 100)/100).toFixed(2);
+        this.sumField.textContent = sum + "€";
+        this.callback()
     }
 }

@@ -26,8 +26,11 @@ export default class ProductEntry {
         this.productEntry.appendChild(productHeader);
 
         const productPrice = document.createElement("div");
-        productPrice.textContent = this.product.price + "€";
         productPrice.classList.add("product-entry-price");
+
+        let price = this.product.price;
+        price = (Math.round(price * 100)/100).toFixed(2);
+        productPrice.textContent = price + "€";
 
         this.productEntry.appendChild(productPrice);
 

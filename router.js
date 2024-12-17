@@ -16,6 +16,7 @@ let customer;
 function handleRouteChange() {
     const path = window.location.pathname;
     let view;
+    let isModal = false;
     
     switch (path) {
         case rootPath + '/cart':
@@ -32,6 +33,7 @@ function handleRouteChange() {
             if (path.match(rootPath + '/product/[0-9]+')) {
                 const productId = path.split('/').pop();
                 view = productDetailsView(productId, productList, cart, rootPath);
+                isModal = true;
                 currentView = "productDetails";
             } else {
                 view = productListView(productList, categoryList, cart, customer, rootPath);
@@ -39,8 +41,14 @@ function handleRouteChange() {
             }
     }
     
-    document.getElementById('view-container').innerHTML = "";
-    document.getElementById('view-container').appendChild(view);
+    if (isModal) {
+        document.getElementById("modal-view").innerHTML = "";
+        document.getElementById("modal-view").appendChild(view);
+        document.getElementById("modal").classList.remove("--hidden");
+    } else {
+        document.getElementById('view-container').innerHTML = "";
+        document.getElementById('view-container').appendChild(view);
+    }
 }
 
 // Function for nav route elements

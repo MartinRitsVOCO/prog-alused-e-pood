@@ -3,9 +3,10 @@ import RemoveFromCartButton from "./RemoveFromCartButton.js";
 import CartFields from "./CartFields.js";
 
 export default class CartEntry extends ProductEntry {
-    constructor(...args) {
+    constructor(cartTotalCost, ...args) {
         super(...args);
         this.cartEntry = super.render();
+        this.cartTotalCost = cartTotalCost;
     }
 
     render() {
@@ -18,13 +19,18 @@ export default class CartEntry extends ProductEntry {
         const removeButton = new RemoveFromCartButton(this.product, this.cart, this.removeEntry, this);
         entryButtons.appendChild(removeButton.render());
 
-        const cartFields = new CartFields(this.product, this.cart);
+        const cartFields = new CartFields(this.product, this.cart, this.updateCartTotalCost, this);
         entryButtons.appendChild(cartFields.render());
 
         return this.cartEntry;
     }
 
+    updateCartTotalCost() {
+        this.cartTotalCost.textContent = this.cart.calculateTotal() + "€";
+    }
+
     removeEntry() {
+        this.updateCartTotalCost();
         this.cartEntry.remove();
     }
 }

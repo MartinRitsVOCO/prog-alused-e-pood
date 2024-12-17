@@ -24,11 +24,13 @@ export default class Cart {
     }
 
     calculateTotal() {
-        return this.products.reduce((total, product) => total + product.price * product.quantity, 0);
+        let total = this.products.reduce((total, product) => total + product.price * product.quantity, 0);
+        total = (Math.round(total * 100)/100).toFixed(2);
+        return total;
     }
 
     get totalItems() {
-        return this.products.reduce((total, product) => total + product.quantity, 0);
+        return this.products.length;
     }
 
     clear() {
